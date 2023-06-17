@@ -10,12 +10,16 @@ import OpenAPIRuntime
 import OpenAPIURLSession
 
 struct OpenAPIMock: APIProtocol {
+    func getModel(_ input: Operations.getModel.Input) async throws -> Operations.getModel.Output {
+        let data = try Bundle.module.data(forResource: "ModelSuccess")
+        let model = try JSONDecoder().decode(Components.Schemas.Model.self, from: data)
+        return .ok(Operations.getModel.Output.Ok(body: .json(model)))
+    }
+    
     func getModels(_ input: Operations.getModels.Input) async throws -> Operations.getModels.Output {
         let data = try Bundle.module.data(forResource: "ModelResponseSuccess")
         let modelResponse = try JSONDecoder().decode(Components.Schemas.ModelsResponse.self, from: data)
-        return .ok(Operations.getModels.Output.Ok(
-          body: .json(modelResponse)
-        ))
+        return .ok(Operations.getModels.Output.Ok(body: .json(modelResponse)))
     }
     
 //    func getModels(_ input: Operations.getModels.Input) async throws -> Components.Schemas.ModelsResponse {

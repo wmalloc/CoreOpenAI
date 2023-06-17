@@ -17,7 +17,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ModelsResponse'
-
+  /v1/models/{model}:
+    get:
+      operationId: getModel
+      parameters:
+        - name: model
+          in: path
+          description: "The ID of the model to retrieve information about."
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: "Retrieves information about a specific model, including its training status."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Model'
+                
 components:
   schemas:
     ModelsResponse:

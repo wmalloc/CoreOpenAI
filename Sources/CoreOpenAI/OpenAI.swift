@@ -34,4 +34,17 @@ public extension OpenAI {
           throw URLError(URLError.Code(rawValue: statusCode))
         }
     }
+    
+    func model(name: String) async throws -> Components.Schemas.Model {
+        let response = try await client.getModel(Operations.getModel.Input(path: Operations.getModel.Input.Path(model: name)))
+        switch response {
+        case .ok(let okResponse):
+          switch okResponse.body {
+          case .json(let model):
+            return model
+          }
+        case .undocumented(statusCode: let statusCode, _):
+          throw URLError(URLError.Code(rawValue: statusCode))
+        }
+    }
 }

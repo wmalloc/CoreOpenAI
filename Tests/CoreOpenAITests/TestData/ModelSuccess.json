@@ -1,0 +1,24 @@
+{
+  "id": "gpt-3.5-turbo-0301",
+  "object": "model",
+  "created": 1677649963,
+  "owned_by": "openai",
+  "permission": [
+    {
+      "id": "modelperm-",
+      "object": "model_permission",
+      "created": 1682525090,
+      "allow_create_engine": false,
+      "allow_sampling": true,
+      "allow_logprobs": true,
+      "allow_search_indices": false,
+      "allow_view": true,
+      "allow_fine_tuning": false,
+      "organization": "*",
+      "group": null,
+      "is_blocking": false
+    }
+  ],
+  "root": "gpt-3.5-turbo-0301",
+  "parent": null
+}
