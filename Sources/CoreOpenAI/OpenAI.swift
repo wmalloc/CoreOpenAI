@@ -48,3 +48,19 @@ public extension OpenAI {
         }
     }
 }
+
+public extension OpenAI {
+    func chatCompletions(model: String, message: String) async throws -> Components.Schemas.ChatCompletionResponse {
+        let body = Components.Schemas.ChatCompletionRequest(model: model, messages: [Components.Schemas.Message(role: "user", content: message)])
+        let response = try await client.chatCompletions(Operations.chatCompletions.Input(body: .json(body)))
+        switch response {
+        case .ok(let okResponse):
+          switch okResponse.body {
+          case .json(let chatResponse):
+            return chatResponse
+          }
+        case .undocumented(statusCode: let statusCode, _):
+          throw URLError(URLError.Code(rawValue: statusCode))
+        }
+    }
+}

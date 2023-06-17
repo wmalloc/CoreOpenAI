@@ -34,7 +34,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Model'
-                
+  /v1/chat/completions:
+    post:
+      operationId: chatCompletions
+      requestBody:
+        description: "The prompt(s) to generate completions for."
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatCompletionRequest'
+      responses:
+        '200':
+          description: "Generates completions for the prompt(s)."
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/ChatCompletionResponse'
 components:
   schemas:
     ModelsResponse:
@@ -67,8 +84,6 @@ components:
           type: string
         created:
           type: integer
-        owned_by:
-          type: string
         permission:
           type: array
           items:
@@ -117,7 +132,7 @@ components:
         is_blocking:
           type: boolean
     ServerError:
-      type: object
+      type: object  
       required:
         - message
         - type
@@ -150,3 +165,86 @@ components:
           type: integer
         total_tokens:
           type: integer
+    ChatCompletionRequest:
+      type: object
+      required:
+        - model
+        - messages
+      properties:
+        model:
+          type: string
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+        temperature:
+          type: number
+        top_p:
+          type: number
+        n:
+          type: integer
+        stream:
+          type: boolean
+        stop:
+          type: string
+        max_tokens:
+          type: integer
+        presence_penalty:
+          type: number
+        frequency_penalty:
+          type: number
+        logit_bias:
+          type: object
+        user:
+          type: string
+    Message:
+      type: object
+      required:
+        - role
+      properties:
+        role:
+          type: string
+        content:
+          type: string
+        name:
+          type: integer
+    ChatCompletionResponse:
+      type: object
+      required:
+        - id
+        - object
+        - created
+        - choices
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+        created:
+          type: number
+        choices:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChatChoice'
+        finish_reason:
+          type: string
+    ChatChoice:
+      type: object
+      required:
+        - index
+      properties:
+        index:
+          type: integer
+        message:
+          type: object
+          properties:
+            role:
+              type: string
+            content:
+              type: string
+            name:
+              type: integer
+        finish_reason:
+          type: string
+
+
