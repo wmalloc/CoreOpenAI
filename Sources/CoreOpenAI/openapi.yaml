@@ -1,0 +1,135 @@
+openapi: "3.0.3"
+info:
+  title: "OpenAI API"
+  version: 1.0.0
+servers:
+  - url: https://api.openai.com
+    description: "Interact with the OpenAI API through HTTP requests"
+paths:
+  /v1/models:
+    get:
+      operationId:
+        getModels
+      responses:
+        '200':
+          description: "Lists the currently available models, and provides basic information about each one such as the owner and availability."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelsResponse'
+
+components:
+  schemas:
+    ModelsResponse:
+      type: object
+      required:
+        - object
+        - data
+      properties:
+        object:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Model'
+    Model:
+      type: object
+      required:
+        - id
+        - object
+        - created
+        - owned_by
+        - permission
+        - root
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+        owned_by:
+          type: string
+        created:
+          type: integer
+        owned_by:
+          type: string
+        permission:
+          type: array
+          items:
+            $ref: '#/components/schemas/Permission'
+        root:
+          type: string
+        parent:
+          type: string
+    Permission:
+      type: object
+      required:
+        - id
+        - object
+        - created
+        - allow_create_engine
+        - allow_sampling
+        - allow_logprobs
+        - allow_search_indices
+        - allow_view
+        - allow_fine_tuning
+        - organization
+        - is_blocking
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+        created:
+          type: integer
+        allow_create_engine:
+          type: boolean
+        allow_sampling:
+          type: boolean
+        allow_logprobs:
+          type: boolean
+        allow_search_indices:
+          type: boolean
+        allow_view:
+          type: boolean
+        allow_fine_tuning:
+          type: boolean
+        organization:
+          type: string
+        group:
+          type: string
+        is_blocking:
+          type: boolean
+    ServerError:
+      type: object
+      required:
+        - message
+        - type
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+        param:
+          type: string
+        type:
+          type: string
+    ErrorResponse:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: object
+          $ref: '#/components/schemas/ServerError'
+    Usage:
+      type: object
+      required:
+        - prompt_tokens
+        - total_tokens
+      properties:
+        prompt_tokens:
+          type: integer
+        completion_tokens:
+          type: integer
+        total_tokens:
+          type: integer
