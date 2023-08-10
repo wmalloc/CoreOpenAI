@@ -9,7 +9,7 @@ import Foundation
 import OpenAPIRuntime
 import OpenAPIURLSession
 
-struct OpenAPIMock: APIProtocol {
+struct OpenAIMock: APIProtocol {
     static func createResponse<ResponseType: Decodable>(name: String) throws -> ResponseType {
         let data = try Bundle.module.data(forResource: name)
         let modelResponse = try JSONDecoder().decode(ResponseType.self, from: data)

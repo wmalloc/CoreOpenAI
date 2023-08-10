@@ -2,7 +2,7 @@
 import XCTest
 
 final class ModelsTests: XCTestCase {
-    let client = OpenAI(client: OpenAPIMock())
+    let client = OpenAI(client: OpenAIMock())
     
     func testGetModlesResponseSuccess() async throws {
         let modelsResponse = try await client.models()
