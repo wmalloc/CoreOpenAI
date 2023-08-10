@@ -11,8 +11,8 @@ final class ChatCompletionTests: XCTestCase {
     let client = OpenAI(client: OpenAPIMock())
 
     func testChatCompletion() async throws {
-        let completion = Components.Schemas.CreateChatCompletionRequest(model: "gpt-3.5-turbo-0301", messages: [.init(role: .user, content: "Hello")])
-        let response = try await client.createChat(completion: completion)
+        let request: Components.Schemas.CreateChatCompletionRequest = try OpenAPIMock.createResponse(name: "ChatCompletionsParameters")
+        let response = try await client.createChat(completion: request)
         XCTAssertEqual(response.object, "chat.completion")
         XCTAssertEqual(response.id, "chatcmpl-12")
     }
