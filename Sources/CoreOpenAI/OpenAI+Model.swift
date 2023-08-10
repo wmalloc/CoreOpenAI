@@ -9,8 +9,8 @@ import OpenAPIRuntime
 import OpenAPIURLSession
 
 public extension OpenAI {
-    func models() async throws -> Components.Schemas.ListModelsResponse {
-        let response = try await client.listModels(.init())
+    func models(input: Operations.listModels.Input = .init()) async throws -> Components.Schemas.ListModelsResponse {
+        let response = try await client.listModels(input)
         switch response {
         case .ok(let okResponse):
           switch okResponse.body {
@@ -22,8 +22,8 @@ public extension OpenAI {
         }
     }
     
-    func retrieve(model name: String) async throws -> Components.Schemas.Model {
-        let response = try await client.retrieveModel(.init(path: .init(model: name)))
+    func retrieve(model: Operations.retrieveModel.Input) async throws -> Components.Schemas.Model {
+        let response = try await client.retrieveModel(model)
         switch response {
         case .ok(let okResponse):
             switch okResponse.body {
@@ -35,8 +35,8 @@ public extension OpenAI {
         }
     }
     
-    func delete(model name: String) async throws -> Components.Schemas.DeleteModelResponse {
-        let response = try await client.deleteModel(.init(path: .init(model: name)))
+    func delete(model: Operations.deleteModel.Input) async throws -> Components.Schemas.DeleteModelResponse {
+        let response = try await client.deleteModel(model)
         switch response {
         case .ok(let okResponse):
             switch okResponse.body {

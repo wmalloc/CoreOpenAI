@@ -32,12 +32,12 @@ struct OpenAPIMock: APIProtocol {
     }
     
     func createCompletion(_ input: CoreOpenAI.Operations.createCompletion.Input) async throws -> CoreOpenAI.Operations.createCompletion.Output {
-        let response: Components.Schemas.CreateCompletionResponse = try Self.createResponse(name: "ChatCompletionsResponse")
+        let response: Components.Schemas.CreateCompletionResponse = try Self.createResponse(name: "CompletionsResponse")
         return .ok(Operations.createCompletion.Output.Ok(body: .json(response)))
     }
     
     func createEdit(_ input: CoreOpenAI.Operations.createEdit.Input) async throws -> CoreOpenAI.Operations.createEdit.Output {
-        let response: Components.Schemas.CreateEditResponse = try Self.createResponse(name: "ChatCompletionsResponse")
+        let response: Components.Schemas.CreateEditResponse = try Self.createResponse(name: "EditResponse")
         return .ok(Operations.createEdit.Output.Ok(body: .json(response)))
     }
     
